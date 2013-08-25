@@ -1,0 +1,20 @@
+language: php
+
+php:
+    - 5.3
+    - 5.4
+    - 5.5
+
+env:
+    global:
+        - secure: "KCqUtDYHj1LbmbX3ayC/RFxGoVVd/md8TvTUb3V7H8qR+5+vOgoOLENAiQDO\nCjry3iXQvhaylQqhxEjTr4nFRzxS+nTHbGQkV+rfJGIL6oMhlAdzOodtTDxo\naM9WKaysuAIEM+K4w5myl7C9Ge29n4Slr5DOxKhitQIoCiAhtvc="
+
+before_script:
+    - mkdir -p ~/.composer
+    - "[ ! -z \"$GITHUB_TOKEN\" ] && echo \"{ \\\"config\\\": { \\\"github-oauth\\\": { \\\"github.com\\\": \\\"$GITHUB_TOKEN\\\" } } }\" > ~/.composer/config.json || true"
+    - wget http://getcomposer.org/composer.phar
+    - php composer.phar validate || true
+    - "if [ ! -z \"$GITHUB_TOKEN\" ]; then php composer.phar install --dev; else php composer.phar install --dev --prefer-source; fi;"
+
+script:
+    - vendor/bin/atoum -d Tests -bf vendor/autoload.php

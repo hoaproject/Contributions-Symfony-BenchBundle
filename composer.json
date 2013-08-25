@@ -1,0 +1,55 @@
+{
+    "name": "hoathis/bench-bundle",
+    "description": "The Hoa\\Xyl Symfony 2 bundle.",
+    "type"       : "symfony-bundle",
+    "keywords"   : ["library", "bundle", "symfony", "xyl"],
+    "homepage"   : "http://hoa-project.net/",
+    "license"    : "BSD-3-Clause",
+    "authors"    : [
+        {
+            "name": "Julien Bianchi",
+            "email": "julien.bianchi@hoa-project.net"
+        },
+        {
+            "name" : "Ivan Enderlin",
+            "email": "ivan.enderlin@hoa-project.net"
+        },
+        {
+            "name"    : "Hoa community",
+            "homepage": "http://hoa-project.net/"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/jubianchi/HoaComposer.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/jubianchi/Bench.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/jubianchi/Core.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "hoa/composer": "dev-master",
+        "hoa/bench": "dev-master",
+        "symfony/http-kernel": "~2.2"
+    },
+    "require-dev": {
+        "atoum/atoum": "dev-master",
+        "symfony/config": "~2.2",
+        "symfony/dependency-injection": "~2.2",
+        "symfony/templating": "~2.2"
+    },
+    "minimum-stability": "dev",
+    "target-dir": "Hoathis/Bundle/Bench",
+    "autoload": {
+        "psr-0": {
+            "Hoathis\\Bundle\\Bench": "."
+        }
+    }
+}
