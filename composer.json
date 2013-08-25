@@ -37,7 +37,8 @@
         "php": ">=5.3.3",
         "hoa/composer": "dev-master",
         "hoa/bench": "dev-master",
-        "symfony/http-kernel": "~2.2"
+        "symfony/http-kernel": "~2.2",
+        "symfony/twig-bridge": "~2.2"
     },
     "require-dev": {
         "atoum/atoum": "dev-master",
