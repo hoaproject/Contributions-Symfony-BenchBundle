@@ -1,8 +1,8 @@
 {
     "name": "hoathis/bench-bundle",
-    "description": "The Hoa\\Xyl Symfony 2 bundle.",
+    "description": "The Hoa\\Bench Symfony 2 bundle.",
     "type"       : "symfony-bundle",
-    "keywords"   : ["library", "bundle", "symfony", "xyl"],
+    "keywords"   : ["library", "bundle", "symfony", "bench"],
     "homepage"   : "http://hoa-project.net/",
     "license"    : "BSD-3-Clause",
     "authors"    : [
@@ -41,10 +41,8 @@
         "symfony/twig-bridge": "~2.2"
     },
     "require-dev": {
-        "atoum/atoum": "dev-master",
         "symfony/config": "~2.2",
-        "symfony/dependency-injection": "~2.2",
-        "symfony/templating": "~2.2"
+        "symfony/dependency-injection": "~2.2"
     },
     "minimum-stability": "dev",
     "target-dir": "Hoathis/Bundle/BenchBundle",
