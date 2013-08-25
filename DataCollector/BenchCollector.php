@@ -41,6 +41,8 @@ class BenchCollector implements DataCollectorInterface
                 'id' => $id,
                 'time' => $mark[Bench::STAT_RESULT],
                 'percent' => $mark[Bench::STAT_POURCENT],
+                'running' => $this->bench->{$id}->isRunning(),
+                'paused' => $this->bench->{$id}->isPause()
             );
 
             $data['total_time'] += $mark[Bench::STAT_RESULT];
