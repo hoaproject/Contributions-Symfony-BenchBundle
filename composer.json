@@ -46,10 +46,10 @@
         "symfony/templating": "~2.2"
     },
     "minimum-stability": "dev",
-    "target-dir": "Hoathis/Bundle/Bench",
+    "target-dir": "Hoathis/Bundle/BenchBundle",
     "autoload": {
         "psr-0": {
-            "Hoathis\\Bundle\\Bench": "."
+            "Hoathis\\Bundle\\BenchBundle": "."
         }
     }
 }
