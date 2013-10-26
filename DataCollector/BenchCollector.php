@@ -1,74 +1,78 @@
 <?php
 
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Hoathis\Bundle\BenchBundle\DataCollector;
 
 use Hoa\Bench\Bench;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class BenchCollector implements DataCollectorInterface
 {
+    const NAME = 'bench';
+
     protected $bench;
     protected $data = array();
 
     public function __construct(Bench $bench)
     {
         $this->bench = $bench;
+
+        $this->reset();
+    }
+
+    public function getBench()
+    {
+        return $this->bench;
+    }
+
+    public function reset()
+    {
+        $this->data = array(
+            self::NAME => array(
+                'nb_marks' => 0,
+                'marks' => array(
+                    'php' => array(),
+                    'twig' => array()
+                ),
+                'longest' => null
+            )
+        );
     }
 
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        $data = array(
-            'nb_marks' => count($this->bench),
-            'total_time' => 0,
-            'marks' => array(),
-            'longest' => $this->bench->getLongest()
-        );
+        $this->reset();
 
         foreach ($this->bench->getStatistic() as $id => $mark) {
-            $data['marks'][] = array(
-                'id' => $id,
+            $type = preg_match('/^twig\./', $id) === 1 ? 'twig' : 'php';
+
+            $this->data[self::NAME]['marks'][$type][] = array(
+                'id' => preg_replace('/^twig\./', '', $id),
                 'time' => $mark[Bench::STAT_RESULT],
                 'percent' => $mark[Bench::STAT_POURCENT],
                 'running' => $this->bench->{$id}->isRunning(),
                 'paused' => $this->bench->{$id}->isPause()
             );
-
-            $data['total_time'] += $mark[Bench::STAT_RESULT];
         }
 
-        $this->data = array($this->getName() => $data);
+        $this->data[self::NAME]['nb_marks'] = count($this->bench);
     }
 
     public function getName()
     {
-        return 'bench';
+        return self::NAME;
     }
 
     public function getNbMarks() {
-        return $this->data[$this->getName()]['nb_marks'];
-    }
-
-    public function getTotalTime() {
-        return $this->data[$this->getName()]['total_time'];
+        return $this->data[self::NAME]['nb_marks'];
     }
 
     public function getMarks() {
-        return $this->data[$this->getName()]['marks'];
+        return $this->data[self::NAME]['marks'];
     }
 
     public function getLongest() {
-        return $this->data[$this->getName()]['longest'];
+        return $this->data[self::NAME]['longest'];
     }
 }

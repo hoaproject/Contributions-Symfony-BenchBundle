@@ -19,36 +19,26 @@
             "homepage": "http://hoa-project.net/"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/jubianchi/HoaComposer.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/jubianchi/Bench.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/jubianchi/Core.git"
-        }
-    ],
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "hoa/composer": "dev-master",
-        "hoa/bench": "dev-master",
+        "hoa/bench": "*",
         "symfony/http-kernel": "~2.2",
-        "symfony/twig-bridge": "~2.2"
+        "symfony/console": "~2.2",
+        "symfony/config": "~2.2",
+        "symfony/dependency-injection": "~2.2",
+        "twig/twig": "~1.11"
     },
     "require-dev": {
-        "symfony/config": "~2.2",
-        "symfony/dependency-injection": "~2.2"
+        "atoum/atoum": "dev-master"
     },
-    "minimum-stability": "dev",
     "target-dir": "Hoathis/Bundle/BenchBundle",
     "autoload": {
         "psr-0": {
             "Hoathis\\Bundle\\BenchBundle": "."
         }
+    },
+    "config": {
+        "bin-dir": "bin/"
     }
 }
