@@ -18,7 +18,9 @@ Add these lines to your `require-dev` section:
 ```json
 {
     "require-dev": {
-        "hoathis/bench-bundle": "dev-master@dev"
+        "hoa/core": "*@dev",
+        "hoa/bench": "*@dev",
+        "hoathis/bench-bundle": "dev-master"
     }
 }
 ```
