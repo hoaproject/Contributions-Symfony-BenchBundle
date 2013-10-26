@@ -57,6 +57,7 @@ class BenchCollector implements DataCollectorInterface
         }
 
         $this->data[self::NAME]['nb_marks'] = count($this->bench);
+        $this->data[self::NAME]['longest'] = $this->bench->getLongest();
     }
 
     public function getName()

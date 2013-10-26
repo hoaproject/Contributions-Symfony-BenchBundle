@@ -60,7 +60,7 @@ class BenchCollector extends atoum
                     ->float['percent']->isGreaterThan(0.0)
                     ->boolean['running']->isTrue()
                     ->boolean['paused']->isFalse()
-                ->variable($collector->getLongest())->isNull()
+                ->variable($collector->getLongest())->isNotNull()
             ->if($bench->{$name}->pause())
             ->and($collector->collect($request, $response))
             ->then
@@ -72,6 +72,7 @@ class BenchCollector extends atoum
                     ->float['percent']->isGreaterThan(0.0)
                     ->boolean['running']->isTrue()
                     ->boolean['paused']->isTrue()
+                ->variable($collector->getLongest())->isNotNull()
             ->if($bench->{$name}->stop())
             ->and($collector->collect($request, $response))
             ->then
@@ -83,6 +84,7 @@ class BenchCollector extends atoum
                     ->float['percent']->isEqualTo(100.0)
                     ->boolean['running']->isFalse()
                     ->boolean['paused']->isFalse()
+                ->variable($collector->getLongest())->isNotNull()
             ->if($otherName = 'twig.' . $name)
             ->and($bench->{$otherName}->start()->stop())
             ->and($collector->collect($request, $response))
@@ -97,6 +99,7 @@ class BenchCollector extends atoum
                     ->float['percent']->isGreaterThan(0.0)
                     ->boolean['running']->isFalse()
                     ->boolean['paused']->isFalse()
+                ->variable($collector->getLongest())->isNotNull()
         ;
     }
 }
