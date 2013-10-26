@@ -5,6 +5,12 @@ Moreover, Hoa aims at being a bridge between industrial and research worlds.
 
 # Hoathis\BenchBundle [![Build Status](https://travis-ci.org/jubianchi/HoathisBenchBundle.png?branch=master)](https://travis-ci.org/jubianchi/HoathisBenchBundle)
 
+* [Installation](#installation)
+* [Hoa to use](#how-to-use)
+ * [Bench service](#bench-service)
+ * [Twig helper](#twig-helper)
+ * [Console helper](#console-helper)
+
 ## Installation
 
 Add these lines to your `require-dev` section:
