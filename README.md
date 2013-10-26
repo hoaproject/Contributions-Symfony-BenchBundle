@@ -3,7 +3,7 @@
 Hoa is a **modular**, **extensible** and **structured** set of PHP libraries.
 Moreover, Hoa aims at being a bridge between industrial and research worlds.
 
-# Hoathis\BenchBundle ![Hoathis\BenchBundle](https://travis-ci.org/jubianchi/HoathisBenchBundle.png)
+# Hoathis\BenchBundle [![Build Status](https://travis-ci.org/jubianchi/HoathisBenchBundle.png?branch=master)](https://travis-ci.org/jubianchi/HoathisBenchBundle)
 
 ## Installation
 
