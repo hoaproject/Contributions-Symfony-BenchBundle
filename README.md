@@ -19,7 +19,7 @@ Add these lines to your `require-dev` section:
 
 Then install dependencies:
 
-```shell
+```sh
 $ composer update hoathis/bench-bundle
 ```
 
@@ -30,12 +30,12 @@ And add `BenchBundle` to your `AppKernel`:
 
 class AppKernel extends Kernel
 {
-    //…
+    …
 
     public function registerBundles()
     {
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-            //…
+            …
             $bundles[] = new \Hoathis\Bundle\BenchBundle\BenchBundle();
         }
 
@@ -158,10 +158,10 @@ class TestCommand extends ContainerAwareCommand
         $bench = $this->getContainer()->get('bench.helper');
 
         $bench->start('foo');
-        //…
+        …
 
         $bench->start('bar');
-        //…
+        …
         $bench->stop('bar');
 
         $bench->stop('foo');
@@ -175,7 +175,7 @@ The API is the same as the `bench` service except that with the helper, you pass
 
 The results will be render on the command's output when you call the `summarize`method:
 
-```shell
+```sh
 $ app/console hoa:bench:demo
 # ...
 +------+-----------------+-----------------+
