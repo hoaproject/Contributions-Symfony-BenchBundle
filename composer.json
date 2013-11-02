@@ -23,11 +23,11 @@
     "require": {
         "php": ">=5.3.3",
         "hoa/bench": "*",
-        "symfony/http-kernel": "~2.2",
-        "symfony/console": "~2.2",
-        "symfony/config": "~2.2",
-        "symfony/dependency-injection": "~2.2",
-        "twig/twig": "~1.11"
+        "symfony/http-kernel": "~2.3.6",
+        "symfony/console": "~2.3.6",
+        "symfony/config": "~2.3.6",
+        "symfony/dependency-injection": "~2.3.6",
+        "twig/twig": "~1.0"
     },
     "require-dev": {
         "atoum/atoum": "dev-master"
