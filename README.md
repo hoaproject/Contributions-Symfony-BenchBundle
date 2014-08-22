@@ -6,7 +6,7 @@ Moreover, Hoa aims at being a bridge between industrial and research worlds.
 # Hoathis\BenchBundle [![Build Status](https://travis-ci.org/jubianchi/HoathisBenchBundle.png?branch=master)](https://travis-ci.org/jubianchi/HoathisBenchBundle)
 
 * [Installation](#installation)
-* [Hoa to use](#how-to-use)
+* [How to use](#how-to-use)
  * [Bench service](#bench-service)
  * [Twig helper](#twig-helper)
  * [Console helper](#console-helper)
@@ -56,7 +56,9 @@ class AppKernel extends Kernel
 
 ### Bench service
 
-`BenchBundle` will automatically setup a `bench` service which you can use in your PHP code to benchmark parts of your application. Results will be aggregated and reported in the profile.
+`BenchBundle` will automatically setup a `bench` service which you can use in
+your PHP code to benchmark parts of your application. Results will be aggregated
+and reported in the profile.
 
 ```php
 <?php
@@ -78,9 +80,11 @@ class DemoController extends Controller
 }
 ```
 
-In the previous example we created a mark named `renderView` in measuring the time taken to render the Twig template.
+In the previous example we created a mark named `renderView` in measuring the
+time taken to render the Twig template.
 
-You can create several marks by simply assigning them a unique name and nest them as you want :
+You can create several marks by simply assigning them a unique name and nest
+them as you want:
 
 ```php
 public function indexAction()
@@ -105,13 +109,15 @@ public function indexAction()
 }
 ```
 
-As you can see in the previous example you have three methods to control mark state:
+As you can see in the previous example you have three methods to control mark
+state:
 
-* `Hoa\Bench\Mark::start()` : to start or unpause a mark
-* `Hoa\Bench\Mark::pause($silent = false)` : to pause a mark
-* `Hoa\Bench\Mark::stop($silent = false)` : to stop a mark
+* `Hoa\Bench\Mark::start()`: to start or unpause a mark,
+* `Hoa\Bench\Mark::pause($silent = false)`: to pause a mark,
+* `Hoa\Bench\Mark::stop($silent = false)`: to stop a mark.
 
-You can also get more informations from marks using their [native API](http://hoa-project.net/Literature/Hack/Bench.html#Bien_manipuler_les_marques).
+You can also get more informations from marks using their [native
+API](http://hoa-project.net/Literature/Hack/Bench.html#Manipulate_marks).
 
 ### Twig helper
 
@@ -123,7 +129,7 @@ You can also get more informations from marks using their [native API](http://ho
     {% for user in users %}
         <li>
             {{ user.username }}
-            
+
             {% benchstart 'messagesCount' %}
             <span>
                 {% if user.messages|length %}
@@ -144,7 +150,8 @@ Results of those marks will also be displayed in the web profiler.
 
 ### Console helper
 
-Finally, `BenchBundle` will configure a `bench.helper` service which you can use in your console commands to access marks:
+Finally, `BenchBundle` will configure a `bench.helper` service which you can use
+in your console commands to access marks:
 
 ```php
 <?php
@@ -179,9 +186,11 @@ class TestCommand extends ContainerAwareCommand
 } 
 ```
 
-The API is the same as the `bench` service except that with the helper, you pass marks' names as argument of the `start`/`pause`/`stop` methods.
+The API is the same as the `bench` service except that with the helper, you pass
+marks' names as argument of the `start`/`pause`/`stop` methods.
 
-The results will be render on the command's output when you call the `summarize`method:
+The results will be render on the command's output when you call the
+`summarize`method:
 
 ```sh
 $ app/console hoa:bench:demo
