@@ -114,6 +114,12 @@ class BenchHelper extends Helper
         }
 
         if ($this->table instanceof Table) {
+            try {
+                $p = new \ReflectionProperty($this->table, 'output');
+                $p->setAccessible(true);
+                $p->setValue($this->table, $output);
+            } catch(\ReflectionException $e) {}
+
             $this->table->render();
         } else {
             $this->table->render($output);

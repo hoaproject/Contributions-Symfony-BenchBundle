@@ -123,7 +123,7 @@ class BenchHelper extends atoum
 	public function testSummarize()
 	{
         $this
-            ->given($output = new NullOutput())
+            ->given($output = new \mock\Symfony\Component\Console\Output\NullOutput())
             ->and(
                 $table = class_exists('Symfony\Component\Console\Helper\Table')
                     ? new \mock\Symfony\Component\Console\Helper\Table($output)
@@ -168,7 +168,10 @@ class BenchHelper extends atoum
                 ;
             }
 
-
+            $this->mock($output)
+                ->call('write')->atLeastOnce()
+                ->call('writeln')->atLeastOnce()
+            ;
 	}
 
 	public function testGetName()
