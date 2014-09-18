@@ -7,6 +7,9 @@ use atoum\mock\controller;
 use atoum\test\adapter\call;
 use Hoa\Bench\Bench;
 use Hoathis\Bundle\BenchBundle\Console\Helper\BenchHelper as TestedClass;
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableHelper;
+use Symfony\Component\Console\Output\NullOutput;
 
 class BenchHelper extends atoum
 {
@@ -25,10 +28,19 @@ class BenchHelper extends atoum
             ->if($helper = new TestedClass())
             ->then
                 ->object($helper->getBench())->isInstanceOf('Hoa\Bench\Bench')
+                ->object($helper->getTable())->isInstanceOf(
+                    class_exists('Symfony\Component\Console\Helper\Table')
+                        ? 'Symfony\Component\Console\Helper\Table'
+                        : 'Symfony\Component\Console\Helper\TableHelper'
+                )
             ->given($bench = new Bench())
             ->if($helper = new TestedClass($bench))
             ->then
                 ->object($helper->getBench())->isIdenticalTo($bench)
+            ->given($table = class_exists('Symfony\Component\Console\Helper\Table') ? new Table(new NullOutput()) : new TableHelper())
+            ->if($helper = new TestedClass($bench, $table))
+            ->then
+                ->object($helper->getTable())->isIdenticalTo($table)
         ;
 	}
 
@@ -111,8 +123,13 @@ class BenchHelper extends atoum
 	public function testSummarize()
 	{
         $this
-            ->given($output = new \mock\Symfony\Component\Console\Output\OutputInterface())
-            ->if($helper = new \mock\Hoathis\Bundle\BenchBundle\Console\Helper\BenchHelper())
+            ->given($output = new NullOutput())
+            ->and(
+                $table = class_exists('Symfony\Component\Console\Helper\Table')
+                    ? new \mock\Symfony\Component\Console\Helper\Table($output)
+                    : new \mock\Symfony\Component\Console\Helper\TableHelper()
+            )
+            ->if($helper = new \mock\Hoathis\Bundle\BenchBundle\Console\Helper\BenchHelper(null, $table))
             ->and(
                 $helper
                     ->start($marks[] = uniqid())
@@ -124,9 +141,9 @@ class BenchHelper extends atoum
             )
             ->then
                 ->object($helper->summarize($output))->isIdenticalTo($helper)
-                ->sizeof($calls = $helper->getMockController()->getCalls(new call('addRow'))->toArray())
-                    ->isEqualTo(3)
-                    ->foreach($calls, function($test, $call) use ($marks, & $i) {
+                ->sizeof($calls = $table->getMockController()->getCalls(new call('addRow'))->toArray())
+                    ->isEqualTo(4)
+                    ->foreach(array_slice($calls, 1), function($test, $call) use ($marks, & $i) {
                         $i = $i ?: 0;
                         $arguments = $call->getArguments();
 
@@ -137,9 +154,21 @@ class BenchHelper extends atoum
                                 ->float[2]->isGreaterThan(0.0)->isLessThanOrEqualTo(100.0)
                         ;
                     })
-                ->mock($helper)
-                    ->call('render')->withArguments($output)->once()
-        ;
+            ;
+
+            if (class_exists('Symfony\Component\Console\Helper\Table')) {
+                $this
+                    ->mock($table)
+                       ->call('render')->withArguments()->once()
+                ;
+            } else {
+                $this
+                    ->mock($table)
+                       ->call('render')->withArguments($output)->once()
+                ;
+            }
+
+
 	}
 
 	public function testGetName()

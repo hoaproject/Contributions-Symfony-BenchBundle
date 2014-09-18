@@ -3,29 +3,64 @@
 namespace Hoathis\Bundle\BenchBundle\Console\Helper;
 
 use Hoa\Bench\Bench;
+use Symfony\Component\Console\Helper\Helper;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableHelper;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class BenchHelper extends TableHelper
+class BenchHelper extends Helper
 {
     const NAME = 'bench';
 
     protected $bench;
+    protected $table;
 
-    public function __construct(Bench $bench = null)
+    public function __construct(Bench $bench = null, $table = null)
     {
-        parent::__construct();
-
         $this
             ->setBench($bench)
-            ->setHeaders(
-                array(
-                    'Mark',
-                    'Time',
-                    'Percent'
-                )
-            )
+            ->setTable($table)
         ;
+
+        $this->table->setHeaders(
+            array(
+                'Mark',
+                'Time',
+                'Percent'
+            )
+        );
+    }
+
+    public function setTable($table = null)
+    {
+        if (null === $table) {
+            $table = class_exists('Symfony\Component\Console\Helper\Table') ? new Table(new NullOutput()) : new TableHelper();
+        }
+
+        if (
+            false === is_object($table) &&
+            false === ($table instanceof TableHelper) &&
+            (
+                class_exists('Symfony\Component\Console\Helper\Table') &&
+                false === ($table instanceof Table)
+            )
+        ) {
+            throw new \InvalidArgumentException(sprintf(
+                'Argument 1 passed to %s must be an instanceof Symfony\Component\Console\Helper\Table or Symfony\Component\Console\Helper\TableHelper, %s given',
+                __METHOD__,
+                is_object($table) ? get_class($table) : gettype($table)
+            ));
+        }
+
+        $this->table = $table;
+
+        return $this;
+    }
+
+    public function getTable()
+    {
+        return $this->table;
     }
 
     public function setBench(Bench $bench = null)
@@ -69,7 +104,7 @@ class BenchHelper extends TableHelper
     public function summarize(OutputInterface $output)
     {
         foreach ($this->bench->getStatistic() as $id => $mark) {
-            $this->addRow(
+            $this->table->addRow(
                 array(
                     $id,
                     $mark[Bench::STAT_RESULT],
@@ -78,7 +113,11 @@ class BenchHelper extends TableHelper
             );
         }
 
-        $this->render($output);
+        if ($this->table instanceof Table) {
+            $this->table->render();
+        } else {
+            $this->table->render($output);
+        }
 
         return $this;
     }
