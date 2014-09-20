@@ -1,5 +1,5 @@
 {
-    "name"       : "hoathis/bench-bundle",
+    "name"       : "hoathis/symfony-bench-bundle",
     "description": "The Hoa\\Bench Symfony 2 bundle.",
     "type"       : "symfony-bundle",
     "keywords"   : ["library", "hoa", "bundle", "symfony", "bench"],
