@@ -15,7 +15,7 @@ class BenchCollector extends atoum
         $this
             ->testedClass
                 ->isSubclassOf('Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface')
-            ->string(TestedClass::NAME)->isEqualTo('bench')
+            ->string(TestedClass::NAME)->isEqualTo('hoathis.bench')
         ;
     }
 

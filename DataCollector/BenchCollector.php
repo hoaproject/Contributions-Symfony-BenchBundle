@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 
 class BenchCollector implements DataCollectorInterface
 {
-    const NAME = 'bench';
+    const NAME = 'hoathis.bench';
 
     protected $bench;
     protected $data = array();
