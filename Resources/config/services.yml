@@ -1,0 +1,28 @@
+parameters:
+    hoathis.bench.class: Hoa\Bench\Bench
+    hoathis.bench.twig.extension.class: Hoathis\Bundle\BenchBundle\Twig\Extension\BenchExtension
+    hoathis.bench.helper.class: Hoathis\Bundle\BenchBundle\Console\Helper\BenchHelper
+    hoathis.bench.collector.class: Hoathis\Bundle\BenchBundle\DataCollector\BenchCollector
+
+services:
+    hoathis.bench:
+        class: %hoathis.bench.class%
+
+    hoathis.bench.helper:
+        class: %hoathis.bench.helper.class%
+        arguments:
+            - @hoathis.bench
+
+    bench.twig.extension:
+        class: %hoathis.bench.twig.extension.class%
+        arguments:
+            - @hoathis.bench
+        tags:
+            - { name: twig.extension }
+
+    hoathis.bench.collector:
+        class: %hoathis.bench.collector.class%
+        arguments:
+            - @hoathis.bench
+        tags:
+            - { name: data_collector, template: HoathisBenchBundle:DataCollector:collector, id: hoathis.bench }
