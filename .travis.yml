@@ -16,10 +16,10 @@ cache:
     - $COMPOSER_CACHE_DIR
 
 before_script:
-    - composer require --prefer-source --dev symfony/http-kernel:${SYMFONY_CONSOLE_VERSION}
-    - composer require --prefer-source --dev symfony/console:${SYMFONY_CONSOLE_VERSION}
-    - composer require --prefer-source --dev symfony/config:${SYMFONY_CONSOLE_VERSION}
-    - composer require --prefer-source --dev symfony/dependency-injection:${SYMFONY_CONSOLE_VERSION}
+    - composer require --no-update --prefer-source --dev symfony/http-kernel:${SYMFONY_CONSOLE_VERSION}
+    - composer require --no-update --prefer-source --dev symfony/console:${SYMFONY_CONSOLE_VERSION}
+    - composer require --no-update --prefer-source --dev symfony/config:${SYMFONY_CONSOLE_VERSION}
+    - composer require --no-update --prefer-source --dev symfony/dependency-injection:${SYMFONY_CONSOLE_VERSION}
     - composer install
 
 script:

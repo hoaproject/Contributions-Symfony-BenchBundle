@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * @author Julien Bianchi <julien.bianchi@hoa-project.net>
  */
-class BenchExtension extends Extension
+class HoathisBenchExtension extends Extension
 {
     /**
      * Responds to the twig configuration parameter.

@@ -24,7 +24,7 @@
         </service>
 
         <service id="bench.collector" class="%bench.collector.class%">
-            <tag name="data_collector" template="BenchBundle:DataCollector:collector" id="bench"/>
+            <tag name="data_collector" template="HoathisBenchBundle:DataCollector:collector" id="bench"/>
             <argument type="service" id="bench" />
         </service>
     </services>
