@@ -32,7 +32,9 @@
     <strong>Benchmarks</strong>
     <span class="count">
         <span>{{ collector.nbmarks }}</span>
-        <span>{{ collector.formatTime(collector.marks['global'].time) }}</span>
+        {% if collector.nbmarks > 1 %}
+            <span>{{ collector.formatTime(collector.marks['global'].time) }}</span>
+        {% endif %}
     </span>
 </span>
 {% endblock %}
