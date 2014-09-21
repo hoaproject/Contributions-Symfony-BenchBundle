@@ -25,4 +25,4 @@ services:
         arguments:
             - @hoathis.bench
         tags:
-            - { name: data_collector, template: HoathisBenchBundle:DataCollector:collector, id: hoathis.bench }
+            - { name: data_collector, template: HoathisBenchBundle:BenchCollector:collector, id: hoathis.bench }

@@ -32,6 +32,7 @@ class BenchCollector implements DataCollectorInterface
             self::NAME => array(
                 'nb_marks' => 0,
                 'marks' => array(
+                    'global' => array(),
                     'php' => array(),
                     'twig' => array()
                 ),
@@ -45,19 +46,32 @@ class BenchCollector implements DataCollectorInterface
         $this->reset();
 
         foreach ($this->bench->getStatistic() as $id => $mark) {
-            $type = preg_match('/^twig\./', $id) === 1 ? 'twig' : 'php';
+            if ($id === '__global__') {
+                $this->data[self::NAME]['marks']['global'] = array(
+                    'id' => $id,
+                    'time' => $mark[Bench::STAT_RESULT],
+                    'percent' => $mark[Bench::STAT_POURCENT],
+                    'running' => $this->bench->{$id}->isRunning(),
+                    'paused' => $this->bench->{$id}->isPause()
+                );
+            } else {
+                $type = preg_match('/^twig\./', $id) === 1 ? 'twig' : 'php';
+                $mark = array(
+                    'id' => preg_replace('/^twig\./', '', $id),
+                    'time' => $mark[Bench::STAT_RESULT],
+                    'percent' => $mark[Bench::STAT_POURCENT],
+                    'running' => $this->bench->{$id}->isRunning(),
+                    'paused' => $this->bench->{$id}->isPause()
+                );
 
-            $this->data[self::NAME]['marks'][$type][] = array(
-                'id' => preg_replace('/^twig\./', '', $id),
-                'time' => $mark[Bench::STAT_RESULT],
-                'percent' => $mark[Bench::STAT_POURCENT],
-                'running' => $this->bench->{$id}->isRunning(),
-                'paused' => $this->bench->{$id}->isPause()
-            );
+                $this->data[self::NAME]['marks'][$type][] = $mark;
+                $this->data[self::NAME]['nb_marks'] = count($this->bench);
+
+                if ($mark['time'] > $this->data[self::NAME]['longest']['time']) {
+                    $this->data[self::NAME]['longest'] = $mark;
+                }
+            }
         }
-
-        $this->data[self::NAME]['nb_marks'] = count($this->bench);
-        $this->data[self::NAME]['longest'] = $this->bench->getLongest();
     }
 
     public function getName()
@@ -75,5 +89,14 @@ class BenchCollector implements DataCollectorInterface
 
     public function getLongest() {
         return $this->data[self::NAME]['longest'];
+    }
+
+    public function formatTime($time)
+    {
+        if ($time < 1) {
+            return sprintf('%.2f ms', $time * 1000);
+        } else {
+            return sprintf('%.2f s', $time);
+        }
     }
 }
