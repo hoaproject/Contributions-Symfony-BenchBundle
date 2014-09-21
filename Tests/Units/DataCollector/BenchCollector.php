@@ -28,7 +28,7 @@ class BenchCollector extends atoum
                 ->string($collector->getName())->isIdenticalTo(TestedClass::NAME)
                 ->object($collector->getBench())->isIdenticalTo($bench)
                 ->integer($collector->getNbMarks())->isZero()
-                ->array($collector->getMarks())->isEqualTo(array('php' => array(), 'twig' => array()))
+                ->array($collector->getMarks())->isEqualTo(array('php' => array(), 'twig' => array(), 'global' => array()))
                 ->variable($collector->getLongest())->isNull()
         ;
 	}
@@ -43,7 +43,7 @@ class BenchCollector extends atoum
             ->and($collector->collect($request, $response))
             ->then
                 ->integer($collector->getNbMarks())->isZero()
-                ->array($collector->getMarks())->isEqualTo(array('php' => array(), 'twig' => array()))
+                ->array($collector->getMarks())->isEqualTo(array('php' => array(), 'twig' => array(), 'global' => array()))
                 ->variable($collector->getLongest())->isNull()
             ->if($name = uniqid())
             ->and($bench->{$name}->start())
@@ -51,12 +51,13 @@ class BenchCollector extends atoum
             ->then
                 ->integer($collector->getNbMarks())->isEqualTo(2)
                 ->array($marks = $collector->getMarks())
+                    ->hasKey('global')
                     ->hasKey('php')
                     ->hasKey('twig')
                 ->array($marks['twig'])->isEmpty()
-                ->in($marks['php'][0])
+                ->in($marks['global'])
                     ->string['id']->isEqualTo('__global__')
-                ->in($marks['php'][1])
+                ->in($marks['php'][0])
                     ->string['id']->isEqualTo($name)
                     ->float['time']->isGreaterThan(0.0)
                     ->float['percent']->isGreaterThan(0.0)
@@ -68,7 +69,7 @@ class BenchCollector extends atoum
             ->then
                 ->integer($collector->getNbMarks())->isEqualTo(2)
                 ->array($marks = $collector->getMarks())
-                ->in($marks['php'][1])
+                ->in($marks['php'][0])
                     ->string['id']->isEqualTo($name)
                     ->float['time']->isGreaterThan(0.0)
                     ->float['percent']->isGreaterThan(0.0)
@@ -80,7 +81,7 @@ class BenchCollector extends atoum
             ->then
             ->integer($collector->getNbMarks())->isEqualTo(2)
                 ->array($marks = $collector->getMarks())
-                ->in($marks['php'][1])
+                ->in($marks['php'][0])
                     ->string['id']->isEqualTo($name)
                     ->float['time']->isGreaterThan(0.0)
                     ->float['percent']
